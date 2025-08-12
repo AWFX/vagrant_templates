@@ -1,0 +1,23 @@
+MACHINES = {
+  :"debian" => {
+    :box_name => "debian/bookworm64",
+    :cpus => 2,
+    :memory => 2048,
+    :dir => "./data"
+  }
+}
+
+Vagrant.configure("2") do |config|
+  MACHINES.each do |boxname, boxconfig|
+    config.vm.define boxname do |box|
+      box.vm.box = boxconfig[:box_name]
+      box.vm.synced_folder boxconfig[:dir], "/vagrant"
+      box.vm.hostname = boxname.to_s
+      box.vm.provider "virtualbox" do |vb|
+        vb.name = boxname.to_s
+        vb.memory = boxconfig[:memory]
+        vb.cpus = boxconfig[:cpus]
+      end
+    end
+  end
+end
