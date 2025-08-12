@@ -3,7 +3,7 @@ MACHINES = {
     :box_name => "debian/bookworm64",
     :cpus => 2,
     :memory => 2048,
-    :dir => "./data"
+    :dir => "."
   }
 }
 
