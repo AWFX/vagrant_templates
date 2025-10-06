@@ -1,0 +1,23 @@
+---
+- name: "Basic configuration" 
+  hosts: all
+  become: true
+
+  vars:
+    pkgs:
+      - wget
+      - curl
+      - cronie
+      - httpd
+
+  tasks:
+    - name: "Update pkgs"
+      ansible.builtin.package:
+        name: "*"
+        state: latest
+        update_only: true
+    
+    - name: "Install pkgs"
+      ansible.builtin.package:
+        name: "{{ pkgs }}"
+        state: present
