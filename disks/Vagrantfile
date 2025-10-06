@@ -1,0 +1,25 @@
+MACHINES = {
+  :node => {
+    :box_name => "almalinux/8",
+    :memory => 2048,
+    :cpus => 2,
+    :dir => ".",
+  }
+}
+
+Vagrant.configure("2") do |config|
+  MACHINES.each do |boxname, boxconfig|
+    config.vm.define "disk-node" do |node|
+      node.vm.box = boxconfig[:box_name]
+      node.vm.synced boxconfig[:dir], "/vagrant"
+      node.vm.disk, name: "disk-1", size: "10GB"
+      node.vm.provider "virtualbox" do |v|
+        v.name = "disk-node"
+        v.memory = boxconfig[:memory]
+        v.cpus = boxconfig[:cpus]
+      end
+    end
+  end
+end
+
+
